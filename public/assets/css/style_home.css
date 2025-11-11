@@ -145,33 +145,42 @@ body {
 }
 
 /* --- Effetti Hover e Colori per Card --- */
-.modern-card:hover,
-.modern-card:focus-visible {
+
+/* Disabled cards without href */
+.modern-card:not([href]) {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Only cards with href are interactive */
+.modern-card[href]:hover,
+.modern-card[href]:focus-visible {
     transform: translateY(-10px) scale(1.02);
     box-shadow: 0 20px 40px 0 var(--shadow-color-home);
     outline: none;
 }
 
 .card-cassa { border-top: 4px solid var(--cassa-accent); }
-.card-cassa:hover, .card-cassa:focus-visible { 
+.card-cassa[href]:hover, .card-cassa[href]:focus-visible { 
     border-color: var(--cassa-accent);
     box-shadow: 0 0 30px -5px var(--cassa-accent), 0 20px 40px 0 var(--shadow-color-home);
 }
 
 .card-report { border-top: 4px solid var(--report-accent); }
-.card-report:hover, .card-report:focus-visible { 
+.card-report[href]:hover, .card-report[href]:focus-visible { 
     border-color: var(--report-accent);
     box-shadow: 0 0 30px -5px var(--report-accent), 0 20px 40px 0 var(--shadow-color-home);
 }
 
 .card-admin { border-top: 4px solid var(--admin-accent); }
-.card-admin:hover, .card-admin:focus-visible { 
+.card-admin[href]:hover, .card-admin[href]:focus-visible { 
     border-color: var(--admin-accent);
     box-shadow: 0 0 30px -5px var(--admin-accent), 0 20px 40px 0 var(--shadow-color-home);
 }
 
 .card-docs { border-top: 4px solid #8b5cf6; }
-.card-docs:hover, .card-docs:focus-visible { 
+.card-docs[href]:hover, .card-docs[href]:focus-visible { 
     border-color: #8b5cf6;
     box-shadow: 0 0 30px -5px #8b5cf6, 0 20px 40px 0 var(--shadow-color-home);
 }
@@ -213,7 +222,7 @@ body {
 }
 
 /* Focus visibile per navigazione da tastiera sulle card (anchor/card interattive) */
-.modern-card:focus-visible {
+.modern-card[href]:focus-visible {
   outline: 3px solid rgba(255,255,255,0.85);
   outline-offset: 4px;
   border-radius: var(--radius-grande);
