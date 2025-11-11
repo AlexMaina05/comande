@@ -1,0 +1,207 @@
+/* =================================
+   FOGLIO DI STILE SOLO PER LA HOMEPAGE
+   ================================= */
+
+/* --- Variabili Colori Vivaci --- */
+:root {
+    --testo-home: #ffffff;
+    --testo-home-opaco: #ffffffb0;
+    --sfondo-card-home: rgba(26, 26, 40, 0.75);
+    --bordo-card-home: rgba(255, 255, 255, 0.1);
+    
+    --cassa-accent: #00b4d8;
+    --report-accent: #4ade80;
+    --admin-accent: #f59e0b;
+
+    --shadow-color-home: rgba(0, 0, 0, 0.3);
+    --radius-grande: 20px;
+}
+
+* { box-sizing: border-box; }
+html { height: 100%; }
+
+/* --- Sfondo Animato e Font --- */
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--testo-home);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    
+    /* Gradiente animato */
+    background: linear-gradient(135deg, 
+        #020024, 
+        #090979, 
+        #00d4ff
+    );
+    background-size: 400% 400%;
+    animation: animated-gradient 15s ease infinite;
+}
+
+/* Animazione per lo sfondo */
+@keyframes animated-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- Header Moderno --- */
+.modern-header {
+    width: 100%;
+    padding: 40px 20px;
+    text-align: center;
+}
+.modern-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -1px;
+    color: var(--testo-home);
+}
+.modern-header p {
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin: 5px 0 0;
+    color: var(--testo-home-opaco);
+}
+
+/* --- Griglia e Card --- */
+.modern-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.modern-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.modern-card {
+    background: var(--sfondo-card-home);
+    border: 1px solid var(--bordo-card-home);
+    border-radius: var(--radius-grande);
+    padding: 30px;
+    text-decoration: none;
+    color: var(--testo-home);
+    
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    box-shadow: 0 8px 32px 0 var(--shadow-color-home);
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card-icon {
+    font-size: 3.5rem;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.modern-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--testo-home);
+}
+
+.modern-card p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--testo-home-opaco);
+    line-height: 1.6;
+}
+
+/* --- Effetti Hover e Colori per Card --- */
+.modern-card:hover,
+.modern-card:focus-visible {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px 0 var(--shadow-color-home);
+    outline: none;
+}
+
+.card-cassa { border-top: 4px solid var(--cassa-accent); }
+.card-cassa:hover, .card-cassa:focus-visible { 
+    border-color: var(--cassa-accent);
+    box-shadow: 0 0 30px -5px var(--cassa-accent), 0 20px 40px 0 var(--shadow-color-home);
+}
+
+.card-report { border-top: 4px solid var(--report-accent); }
+.card-report:hover, .card-report:focus-visible { 
+    border-color: var(--report-accent);
+    box-shadow: 0 0 30px -5px var(--report-accent), 0 20px 40px 0 var(--shadow-color-home);
+}
+
+.card-admin { border-top: 4px solid var(--admin-accent); }
+.card-admin:hover, .card-admin:focus-visible { 
+    border-color: var(--admin-accent);
+    box-shadow: 0 0 30px -5px var(--admin-accent), 0 20px 40px 0 var(--shadow-color-home);
+}
+
+.card-docs { border-top: 4px solid #8b5cf6; }
+.card-docs:hover, .card-docs:focus-visible { 
+    border-color: #8b5cf6;
+    box-shadow: 0 0 30px -5px #8b5cf6, 0 20px 40px 0 var(--shadow-color-home);
+}
+
+/* --- Footer Moderno --- */
+.modern-footer {
+    width: 100%;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: auto;
+    font-size: 0.9rem;
+    color: var(--testo-home-opaco);
+}
+.modern-footer a {
+    color: var(--testo-home);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+.modern-footer a:hover {
+    color: var(--cassa-accent);
+}
+.modern-footer span {
+    margin: 0 10px;
+    opacity: 0.5;
+}
+
+/* Migliorie accessibilità e compatibilità (non invasive) */
+
+/* Colore di fallback per browser che non supportano gradienti animati */
+body {
+  background-color: #020024;
+}
+
+/* Rispetta la preferenza di riduzione delle animazioni */
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none !important; transition: none !important; }
+  .modern-card { transition: none !important; transform: none !important; }
+}
+
+/* Focus visibile per navigazione da tastiera sulle card (anchor/card interattive) */
+.modern-card:focus-visible {
+  outline: 3px solid rgba(255,255,255,0.85);
+  outline-offset: 4px;
+  border-radius: var(--radius-grande);
+}
+
+/* Forced-colors / high-contrast adjustments */
+@media (forced-colors: active) {
+  .modern-card:focus-visible { outline-color: Highlight; }
+  body { background: Window; color: WindowText; }
+}
+  
+/* Riduci scala su hover per utenti con ridotto contrasto se necessario */
+@media (max-width: 420px) {
+  .modern-card { padding: 20px; }
+  .modern-header h1 { font-size: 2rem; }
+}

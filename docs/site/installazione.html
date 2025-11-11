@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guida Installazione — Documentazione RICEVUTE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+    <header class="docs-header">
+        <h1>⚙️ Guida Installazione</h1>
+        <p>Installazione e configurazione del sistema RICEVUTE</p>
+        <a href="../../index.html" class="home-link">⬅ Torna alla Home</a>
+    </header>
+
+    <nav class="docs-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link">🏠 Home</a>
+            <a href="guide-utente.html" class="nav-link">👤 Guide Utente</a>
+            <a href="installazione.html" class="nav-link active">⚙️ Installazione</a>
+            <a href="api.html" class="nav-link">🔌 API</a>
+            <a href="tecnica.html" class="nav-link">🛠️ Tecnica</a>
+        </div>
+    </nav>
+
+    <main class="docs-container">
+        <section class="docs-section">
+            <h2>Installazione e Deploy</h2>
+            <p>
+                Questa guida descrive i passi per installare, configurare e mettere in produzione 
+                l'applicazione RICEVUTE in un ambiente LAMP (Linux, Apache/Nginx, PHP, MariaDB/MySQL).
+            </p>
+        </section>
+
+        <section class="docs-section">
+            <h2>Requisiti Minimi</h2>
+            <ul>
+                <li><strong>Server:</strong> Linux (Debian/Ubuntu consigliati) o NAS con supporto PHP+MySQL</li>
+                <li><strong>PHP:</strong> 8.0+ con estensioni: pdo_mysql, mbstring, json, openssl</li>
+                <li><strong>Web Server:</strong> Apache o Nginx</li>
+                <li><strong>Database:</strong> MariaDB / MySQL (10.x consigliato)</li>
+                <li><strong>Stampa:</strong> CUPS (opzionale, per stampa comande)</li>
+                <li><strong>Accesso:</strong> SSH per configurazioni e installazioni</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>1. Clonare il Repository</h2>
+            <pre><code>git clone https://github.com/AlexMaina05/RICEVUTE.git
+cd RICEVUTE</code></pre>
+        </section>
+
+        <section class="docs-section">
+            <h2>2. Configurazione Database</h2>
+            
+            <h3>Creare il Database e l'Utente</h3>
+            <pre><code>mysql -u root -p
+CREATE DATABASE ristorante_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'strong_password';
+GRANT ALL PRIVILEGES ON ristorante_db.* TO 'app_user'@'localhost';
+FLUSH PRIVILEGES;</code></pre>
+
+            <h3>Importare lo Schema</h3>
+            <pre><code>mysql -u app_user -p ristorante_db < sql/schema.sql</code></pre>
+
+            <h3>Note sullo Schema</h3>
+            <ul>
+                <li>Assicurati che i campi stringa usino utf8mb4</li>
+                <li>Per indici unici su VARCHAR lunghi usa VARCHAR(191) se il server ha limiti</li>
+                <li>Se le tabelle hanno vincoli NOT NULL senza seed, inserisci i record minimi</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>3. Seed Iniziali (Obbligatori)</h2>
+            <p>Se lo schema non inserisce dati iniziali, crea almeno:</p>
+            <ul>
+                <li>1 o più categorie in <code>CATEGORIE</code></li>
+                <li>1 reparto in <code>REPARTI</code> (impostare Nome_Stampante_LAN valido)</li>
+                <li>1 o più tavoli in <code>TAVOLI</code> (o opzione ASPORTO)</li>
+                <li>Alcuni <code>PRODOTTI</code> correlati a categorie/reparti</li>
+            </ul>
+            <p>Puoi usare phpMyAdmin o INSERT SQL diretti.</p>
+        </section>
+
+        <section class="docs-section">
+            <h2>4. Configurazione Connessione Database</h2>
+            <p>Modifica il file <code>config/db_connection.php</code> con le tue credenziali:</p>
+            <pre><code>$servername = getenv('DB_HOST') ?: 'localhost';
+$username = getenv('DB_USER') ?: 'app_user';
+$password = getenv('DB_PASS') ?: 'strong_password';
+$dbname = getenv('DB_NAME') ?: 'ristorante_db';</code></pre>
+            <p><strong>Consiglio:</strong> Mantieni le credenziali fuori dal repository usando variabili d'ambiente.</p>
+        </section>
+
+        <section class="docs-section">
+            <h2>5. Impostazioni PHP e Webserver</h2>
+            
+            <h3>Estensioni PHP Richieste</h3>
+            <ul>
+                <li>pdo_mysql</li>
+                <li>mbstring</li>
+                <li>json</li>
+                <li>openssl</li>
+            </ul>
+
+            <h3>Verifica php.ini</h3>
+            <pre><code>memory_limit = 128M
+max_execution_time = 60</code></pre>
+
+            <h3>Permessi</h3>
+            <p>Se <code>exec</code>/<code>shell_exec</code> è disabilitato in <code>disable_functions</code>, 
+            la stampa via <code>lp</code> da PHP non funzionerà. Puoi eseguire la stampa tramite worker CLI.</p>
+
+            <h3>Virtual Host</h3>
+            <p>Configura Apache o Nginx puntando alla cartella del progetto. Per maggiore sicurezza, 
+            punta la document root a <code>/path/to/RICEVUTE/public</code>.</p>
+        </section>
+
+        <section class="docs-section">
+            <h2>6. Configurazione CUPS e Stampanti</h2>
+            
+            <h3>Installazione CUPS</h3>
+            <pre><code>sudo apt install cups</code></pre>
+
+            <h3>Configurazione Stampanti</h3>
+            <ol>
+                <li>Accedi a <code>http://localhost:631</code></li>
+                <li>Aggiungi le stampanti (rete o locali)</li>
+                <li>Assicurati che <code>REPARTI.Nome_Stampante_LAN</code> corrisponda al nome della coda CUPS</li>
+            </ol>
+
+            <h3>Test Stampa</h3>
+            <pre><code>echo "test" > /tmp/test_print.txt
+lp -d nome_queue /tmp/test_print.txt</code></pre>
+
+            <h3>Permessi Utente</h3>
+            <pre><code>sudo usermod -aG lpadmin www-data</code></pre>
+        </section>
+
+        <section class="docs-section">
+            <h2>7. Worker per Processare Comande</h2>
+            
+            <h3>Test Manuale</h3>
+            <pre><code>php scripts/worker_process_comande.php --limit=10 --max-tries=5</code></pre>
+
+            <h3>Opzione 1: Cron (ogni minuto)</h3>
+            <pre><code>* * * * * /usr/bin/php /percorso/REPO/scripts/worker_process_comande.php --limit=20 --max-tries=5 >> /var/log/comande_worker.log 2>&1</code></pre>
+
+            <h3>Opzione 2: Systemd Timer (Raccomandato)</h3>
+            <p>Crea unità .service e .timer (verifica paths e utente):</p>
+            <pre><code>sudo systemctl daemon-reload
+sudo systemctl enable --now worker_comande.timer
+systemctl status worker_comande.service
+journalctl -u worker_comande.service -f</code></pre>
+        </section>
+
+        <section class="docs-section">
+            <h2>8. Test End-to-End</h2>
+            
+            <h3>Endpoint Principali</h3>
+            <ul>
+                <li><code>GET api/cerca_prodotto.php?codice=CODICE</code> - Cerca prodotto</li>
+                <li><code>GET api/genera_report.php?data=YYYY-MM-DD</code> - Genera report</li>
+                <li><code>POST api/salva_ordine.php</code> - Salva ordine</li>
+                <li><code>POST api/ripeti_comanda.php</code> - Ripeti comanda</li>
+            </ul>
+
+            <h3>Esempi Curl</h3>
+            <pre><code># Cerca prodotto
+curl -s "http://localhost/api/cerca_prodotto.php?codice=PZ01" | jq
+
+# Salva ordine
+curl -s -X POST "http://localhost/api/salva_ordine.php" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "nome_cliente":"Mario",
+    "id_tavolo":1,
+    "numero_coperti":2,
+    "totale":12.50,
+    "dettagli":[
+      {"id_prodotto":1,"quantita":2,"prezzo_unitario":3.5}
+    ]
+  }' | jq</code></pre>
+        </section>
+
+        <section class="docs-section">
+            <h2>9. Backup e Manutenzione</h2>
+            <ul>
+                <li>Esegui <code>mysqldump</code> regolarmente e archivia in posizione sicura</li>
+                <li>Configura rotazione log (logrotate) per <code>/var/log/comande_worker.log</code></li>
+                <li>Verifica i log di systemd via <code>journalctl</code> per problemi worker</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>10. Sicurezza e Hardening</h2>
+            <ul>
+                <li>❌ Non committare credenziali in repo; usa <code>.env</code> e <code>.gitignore</code></li>
+                <li>🔒 Servi il sito via HTTPS (Let's Encrypt)</li>
+                <li>🛡️ Proteggi le pagine admin con sessione e password hash</li>
+                <li>🍪 Configura cookie sessioni: <code>secure</code>, <code>httponly</code>, <code>samesite</code></li>
+                <li>🔐 Proteggi azioni critiche con CSRF token</li>
+                <li>📁 Limita l'accesso a cartelle sensibili e disabilita directory listing</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>Troubleshooting Comune</h2>
+            
+            <h3>500 API Error</h3>
+            <p>Controlla i log PHP e il file <code>config/db_connection.php</code></p>
+
+            <h3>Worker Non Stampa</h3>
+            <p>Esegui manualmente <code>lp -d queue /tmp/file</code> e verifica permessi utente</p>
+
+            <h3>Problemi Charset</h3>
+            <p>Assicurati che DB e pagine PHP usino utf8mb4</p>
+
+            <h3>Comande Rimangono in 'pending'</h3>
+            <p>Verifica configurazione CUPS e permessi stampante. Consulta la documentazione completa 
+            in <code>docs/INSTALL.md</code> sezione 11.</p>
+        </section>
+
+        <section class="docs-section">
+            <h2>Link Utili</h2>
+            <ul>
+                <li><a href="../INSTALL.md">Documentazione Installazione Completa (INSTALL.md)</a></li>
+                <li><a href="../PRINT_TESTING_GUIDE.md">Guida Testing Stampa (PRINT_TESTING_GUIDE.md)</a></li>
+                <li><a href="api.html">Documentazione API</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="docs-footer">
+        <small>&copy; <span id="anno"></span> Alessandro Mainardi (AlexMaina05)</small>
+        <span>|</span>
+        <a href="https://github.com/AlexMaina05/RICEVUTE" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+        <span>|</span>
+        <a href="index.html">Indice Documentazione</a>
+    </footer>
+
+    <script>
+        document.getElementById('anno').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

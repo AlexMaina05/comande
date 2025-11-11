@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funzionalità — RICEVUTE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+    <header class="docs-header">
+        <h1>✨ Funzionalità</h1>
+        <p>Feature e implementazioni del sistema</p>
+        <a href="../../index.html" class="home-link">⬅ Torna alla Home</a>
+    </header>
+    <nav class="docs-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link">🏠 Home</a>
+            <a href="guide-utente.html" class="nav-link">👤 Guide Utente</a>
+            <a href="installazione.html" class="nav-link">⚙️ Installazione</a>
+            <a href="api.html" class="nav-link">🔌 API</a>
+            <a href="tecnica.html" class="nav-link">🛠️ Tecnica</a>
+        </div>
+    </nav>
+    <main class="docs-container">
+        <div class="docs-grid">
+            <a href="../STAFF_FLAG_FEATURE.md" class="doc-card">
+                <div class="doc-card-icon">👥</div>
+                <h3>Flag Staff</h3>
+                <p>Gestione ordini staff a costo zero, esclusi dai report</p>
+            </a>
+            <a href="../DISCOUNT_FIELD_IMPLEMENTATION.md" class="doc-card">
+                <div class="doc-card-icon">💰</div>
+                <h3>Sistema Sconti</h3>
+                <p>Applicazione sconti agli ordini clienti</p>
+            </a>
+            <a href="../COSTO_COPERTI.md" class="doc-card">
+                <div class="doc-card-icon">🍽️</div>
+                <h3>Gestione Coperti</h3>
+                <p>Calcolo automatico costo coperto</p>
+            </a>
+            <a href="../CASSA_UX_IMPROVEMENTS.md" class="doc-card">
+                <div class="doc-card-icon">🎨</div>
+                <h3>UX Cassa</h3>
+                <p>Miglioramenti interfaccia cassa</p>
+            </a>
+        </div>
+        <section class="docs-section">
+            <h2>Documentazione Completa Feature</h2>
+            <p>Per informazioni dettagliate su ogni funzionalità, consulta i file nella cartella <code>docs/</code>:</p>
+            <ul>
+                <li><a href="../STAFF_FLAG_FEATURE.md">STAFF_FLAG_FEATURE.md</a></li>
+                <li><a href="../DISCOUNT_FIELD_IMPLEMENTATION.md">DISCOUNT_FIELD_IMPLEMENTATION.md</a></li>
+                <li><a href="../COSTO_COPERTI.md">COSTO_COPERTI.md</a></li>
+                <li><a href="../CASSA_UX_IMPROVEMENTS.md">CASSA_UX_IMPROVEMENTS.md</a></li>
+                <li><a href="../EXPORT.md">EXPORT.md</a> - Export dati e report</li>
+            </ul>
+        </section>
+    </main>
+    <footer class="docs-footer">
+        <small>&copy; <span id="anno"></span> Alessandro Mainardi (AlexMaina05)</small>
+        <span>|</span>
+        <a href="index.html">Indice Documentazione</a>
+    </footer>
+    <script>document.getElementById('anno').textContent = new Date().getFullYear();</script>
+</body>
+</html>

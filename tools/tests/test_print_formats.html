@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Formati di Stampa - RICEVUTE</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .print-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .print-example {
+            background: white;
+            border: 2px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .print-header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            text-align: center;
+        }
+        .print-content {
+            padding: 20px;
+            background-color: white;
+            white-space: pre;
+            font-size: 13px;
+            line-height: 1.4;
+            min-height: 400px;
+        }
+        .note {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        .note strong {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📄 Esempi di Formati di Stampa</h1>
+        
+        <div class="print-examples">
+            <!-- RICEVUTA CLIENTE -->
+            <div class="print-example">
+                <div class="print-header">🧾 RICEVUTA CLIENTE (Stampante: cassa)</div>
+                <div class="print-content" id="ricevuta">==================================
+     BRES & BARACA RISTORANTE     
+==================================
+
+           RICEVUTA CLIENTE       
+
+  Ordine N.: #001234
+  Data/Ora: 24/10/2025 14:30:25
+
+----------------------------------
+  Cliente: Mario Rossi
+  Tavolo: Tavolo 5
+  Coperti: 4
+==================================
+
+ 2 x Pizza Margherita       18.00
+ 1 x Pizza Diavola           9.50
+ 3 x Birra Media            12.00
+ 2 x Coca Cola               6.00
+ 1 x Tiramisu                5.50
+
+----------------------------------
+Subtotale:                  51.00 EUR
+Coperti (4 x 2.00):          8.00 EUR
+==================================
+** TOTALE **                59.00 EUR
+==================================
+
+      Grazie per la Visita!       
+          Arrivederci!            
+
+            * * *                 
+
+
+</div>
+            </div>
+
+            <!-- RICEVUTA CON SCONTO -->
+            <div class="print-example">
+                <div class="print-header">🧾 RICEVUTA CON SCONTO</div>
+                <div class="print-content" id="ricevuta-sconto">==================================
+     BRES & BARACA RISTORANTE     
+==================================
+
+           RICEVUTA CLIENTE       
+
+  Ordine N.: #001235
+  Data/Ora: 24/10/2025 15:45:10
+
+----------------------------------
+  Cliente: Laura Bianchi
+  Tavolo: Tavolo 12
+  Coperti: 2
+==================================
+
+ 2 x Spaghetti Carbonara    24.00
+ 2 x Bistecca Fiorentina    60.00
+ 2 x Vino Rosso Calice      16.00
+ 1 x Panna Cotta             5.00
+
+----------------------------------
+Subtotale:                 105.00 EUR
+Coperti (2 x 2.00):          4.00 EUR
+Sconto:                    -10.00 EUR
+==================================
+** TOTALE **                99.00 EUR
+==================================
+
+      Grazie per la Visita!       
+          Arrivederci!            
+
+            * * *                 
+
+
+</div>
+            </div>
+
+            <!-- COMANDA PIZZERIA -->
+            <div class="print-example">
+                <div class="print-header">🍕 COMANDA REPARTO PIZZERIA</div>
+                <div class="print-content" id="comanda-pizzeria">
+  *** COMANDA PIZZERIA ***  
+
+==================================
+  Ordine: #001234
+  Tavolo: Tavolo 5
+----------------------------------
+  Cliente: Mario Rossi
+  Coperti: 4
+==================================
+
+ [ 2] Pizza Margherita
+ [ 1] Pizza Diavola
+
+==================================
+  Inviato: 24/10/2025 14:30:27
+==================================
+
+
+</div>
+            </div>
+
+            <!-- COMANDA BAR -->
+            <div class="print-example">
+                <div class="print-header">🍺 COMANDA REPARTO BAR</div>
+                <div class="print-content" id="comanda-bar">
+  *** COMANDA BAR ***  
+
+==================================
+  Ordine: #001234
+  Tavolo: Tavolo 5
+----------------------------------
+  Cliente: Mario Rossi
+  Coperti: 4
+==================================
+
+ [ 3] Birra Media
+ [ 2] Coca Cola
+
+==================================
+  Inviato: 24/10/2025 14:30:27
+==================================
+
+
+</div>
+            </div>
+
+            <!-- COMANDA CUCINA -->
+            <div class="print-example">
+                <div class="print-header">🍝 COMANDA REPARTO CUCINA</div>
+                <div class="print-content" id="comanda-cucina">
+  *** COMANDA CUCINA ***  
+
+==================================
+  Ordine: #001235
+  Tavolo: Tavolo 12
+----------------------------------
+  Cliente: Laura Bianchi
+  Coperti: 2
+==================================
+
+ [ 2] Spaghetti Carbonara
+ [ 2] Bistecca Fiorentina
+ [ 1] Panna Cotta
+
+==================================
+  Inviato: 24/10/2025 15:45:12
+==================================
+
+
+</div>
+            </div>
+
+            <!-- RICEVUTA ASPORTO -->
+            <div class="print-example">
+                <div class="print-header">📦 RICEVUTA ASPORTO (Coperti: 0)</div>
+                <div class="print-content" id="ricevuta-asporto">==================================
+     BRES & BARACA RISTORANTE     
+==================================
+
+           RICEVUTA CLIENTE       
+
+  Ordine N.: #001236
+  Data/Ora: 24/10/2025 16:20:33
+
+----------------------------------
+  Cliente: Giovanni Verdi
+  Tavolo: ASPORTO
+  Coperti: 0
+==================================
+
+ 3 x Pizza Margherita       27.00
+ 2 x Focaccia                8.00
+ 1 x Tiramisu                5.50
+
+----------------------------------
+Subtotale:                  40.50 EUR
+==================================
+** TOTALE **                40.50 EUR
+==================================
+
+      Grazie per la Visita!       
+          Arrivederci!            
+
+            * * *                 
+
+
+</div>
+            </div>
+        </div>
+
+        <div class="note">
+            <strong>Nota:</strong> Questi sono esempi di come appaiono le stampe generate dal sistema RICEVUTE.
+            <ul style="margin: 10px 0 0 20px;">
+                <li><strong>RICEVUTA CLIENTE</strong>: Stampata alla stampante "cassa" per il cliente</li>
+                <li><strong>COMANDA REPARTO</strong>: Stampate alle stampanti di reparto (cucina, bar, pizzeria, ecc.) per la preparazione</li>
+                <li>La formattazione utilizza caratteri a larghezza fissa (monospace) per allineamento preciso</li>
+                <li>Le stampe vengono inviate tramite sistema CUPS su Linux</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Log per conferma caricamento
+        console.log('Test formati di stampa caricato correttamente');
+    </script>
+</body>
+</html>

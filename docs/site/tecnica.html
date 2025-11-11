@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentazione Tecnica — RICEVUTE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+    <header class="docs-header">
+        <h1>🛠️ Documentazione Tecnica</h1>
+        <p>Architettura, database e dettagli implementativi</p>
+        <a href="../../index.html" class="home-link">⬅ Torna alla Home</a>
+    </header>
+
+    <nav class="docs-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link">🏠 Home</a>
+            <a href="guide-utente.html" class="nav-link">👤 Guide Utente</a>
+            <a href="installazione.html" class="nav-link">⚙️ Installazione</a>
+            <a href="api.html" class="nav-link">🔌 API</a>
+            <a href="tecnica.html" class="nav-link active">🛠️ Tecnica</a>
+        </div>
+    </nav>
+
+    <main class="docs-container">
+        <section class="docs-section">
+            <h2>Architettura del Sistema</h2>
+            <ul>
+                <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
+                <li><strong>Backend:</strong> PHP 8.0+ con PDO</li>
+                <li><strong>Database:</strong> MariaDB / MySQL</li>
+                <li><strong>Worker:</strong> Script CLI PHP per processare comande</li>
+                <li><strong>Stampa:</strong> Integrazione CUPS via comando <code>lp</code></li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>Struttura del Database</h2>
+
+            <h3>Tabelle Principali</h3>
+
+            <h4>CATEGORIE</h4>
+            <p>Categorie di prodotti (Pizze, Bevande, ecc.)</p>
+            <ul>
+                <li><code>ID_Categoria</code> (INT, PRIMARY KEY)</li>
+                <li><code>Nome_Categoria</code> (VARCHAR)</li>
+            </ul>
+
+            <h4>REPARTI</h4>
+            <p>Reparti di produzione (Cucina, Bar, Pizzeria)</p>
+            <ul>
+                <li><code>ID_Reparto</code> (INT, PRIMARY KEY)</li>
+                <li><code>Nome_Reparto</code> (VARCHAR)</li>
+                <li><code>Nome_Stampante_LAN</code> (VARCHAR) - Coda CUPS</li>
+            </ul>
+
+            <h4>PRODOTTI</h4>
+            <p>Catalogo prodotti</p>
+            <ul>
+                <li><code>ID_Prodotto</code> (INT, PRIMARY KEY)</li>
+                <li><code>Descrizione</code> (VARCHAR)</li>
+                <li><code>Prezzo</code> (DECIMAL)</li>
+                <li><code>Codice_Prodotto</code> (VARCHAR, UNIQUE)</li>
+                <li><code>ID_Categoria</code> (FK → CATEGORIE)</li>
+                <li><code>ID_Reparto</code> (FK → REPARTI)</li>
+            </ul>
+
+            <h4>TAVOLI</h4>
+            <p>Tavoli e opzioni servizio</p>
+            <ul>
+                <li><code>ID_Tavolo</code> (INT, PRIMARY KEY)</li>
+                <li><code>Nome_Tavolo</code> (VARCHAR)</li>
+                <li><code>Tipo_Servizio</code> (ENUM: 'tavolo', 'asporto')</li>
+            </ul>
+
+            <h4>ORDINI</h4>
+            <p>Ordini effettuati</p>
+            <ul>
+                <li><code>ID_Ordine</code> (INT, PRIMARY KEY)</li>
+                <li><code>ID_Tavolo</code> (FK → TAVOLI)</li>
+                <li><code>Nome_Cliente</code> (VARCHAR)</li>
+                <li><code>Numero_Coperti</code> (INT)</li>
+                <li><code>Totale_Ordine</code> (DECIMAL)</li>
+                <li><code>Staff</code> (BOOLEAN) - Flag ordine staff</li>
+                <li><code>Sconto</code> (DECIMAL) - Importo sconto</li>
+                <li><code>Data_Ora</code> (DATETIME)</li>
+            </ul>
+
+            <h4>DETTAGLI_ORDINE</h4>
+            <p>Righe ordine (prodotti ordinati)</p>
+            <ul>
+                <li><code>ID_Dettaglio</code> (INT, PRIMARY KEY)</li>
+                <li><code>ID_Ordine</code> (FK → ORDINI)</li>
+                <li><code>ID_Prodotto</code> (FK → PRODOTTI)</li>
+                <li><code>Quantita</code> (INT)</li>
+                <li><code>Prezzo_Bloccato</code> (DECIMAL)</li>
+            </ul>
+
+            <h4>COMANDE</h4>
+            <p>Comande da stampare per i reparti</p>
+            <ul>
+                <li><code>ID_Comanda</code> (INT, PRIMARY KEY)</li>
+                <li><code>ID_Ordine</code> (FK → ORDINI)</li>
+                <li><code>Nome_Stampante_LAN</code> (VARCHAR)</li>
+                <li><code>Testo_Comanda</code> (TEXT)</li>
+                <li><code>Stato</code> (ENUM: 'pending', 'sent', 'error')</li>
+                <li><code>Tentativi</code> (INT)</li>
+                <li><code>Data_Creazione</code> (DATETIME)</li>
+                <li><code>Data_Invio</code> (DATETIME, NULL)</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>Flusso Ordine</h2>
+            <ol>
+                <li>Utente crea ordine tramite <code>public/cassa.php</code></li>
+                <li>Frontend chiama <code>api/salva_ordine.php</code> con dati ordine</li>
+                <li>Backend:
+                    <ul>
+                        <li>Salva record in <code>ORDINI</code></li>
+                        <li>Salva righe in <code>DETTAGLI_ORDINE</code></li>
+                        <li>Crea comande per reparto in <code>COMANDE</code></li>
+                        <li>Tenta stampa immediata (se <code>lp</code> disponibile)</li>
+                    </ul>
+                </li>
+                <li>Worker CLI (<code>scripts/worker_process_comande.php</code>):
+                    <ul>
+                        <li>Eseguito periodicamente (cron/systemd)</li>
+                        <li>Trova comande con stato 'pending' o 'error'</li>
+                        <li>Tenta stampa tramite <code>lp -d queue file</code></li>
+                        <li>Aggiorna stato a 'sent' o 'error'</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section class="docs-section">
+            <h2>Organizzazione File</h2>
+            <pre><code>RICEVUTE/
+├── api/                  # Endpoint API REST
+├── config/               # Configurazione e autenticazione
+├── docs/                 # Documentazione
+│   └── site/            # Sito documentazione HTML
+├── public/              # File web-accessible
+│   ├── assets/          # CSS e JavaScript
+│   ├── cassa.php        # Creazione ordini
+│   ├── report.php       # Report vendite
+│   └── admin.php        # Pannello admin
+├── scripts/             # Script CLI e worker
+├── sql/                 # Schema database
+└── src/                 # Classi PHP</code></pre>
+        </section>
+
+        <section class="docs-section">
+            <h2>Worker Process Comande</h2>
+            <p>Lo script <code>scripts/worker_process_comande.php</code> processa le comande in coda:</p>
+            
+            <h3>Parametri CLI</h3>
+            <ul>
+                <li><code>--limit=N</code>: Numero massimo comande da processare (default: 20)</li>
+                <li><code>--max-tries=N</code>: Tentativi massimi per comanda (default: 5)</li>
+            </ul>
+
+            <h3>Stati Comanda</h3>
+            <ul>
+                <li><code>pending</code>: In attesa di stampa</li>
+                <li><code>sent</code>: Stampata con successo</li>
+                <li><code>error</code>: Errore stampa (verrà ritentata se Tentativi &lt; max)</li>
+            </ul>
+
+            <h3>Esecuzione Periodica</h3>
+            <p>Opzione 1 - Cron (ogni minuto):</p>
+            <pre><code>* * * * * /usr/bin/php /path/worker_process_comande.php --limit=20</code></pre>
+            <p>Opzione 2 - Systemd timer (raccomandato):</p>
+            <pre><code>sudo systemctl enable --now worker_comande.timer</code></pre>
+        </section>
+
+        <section class="docs-section">
+            <h2>Sicurezza</h2>
+            <ul>
+                <li><strong>SQL Injection:</strong> Prepared statements con PDO</li>
+                <li><strong>XSS:</strong> Sanificazione input e output escaping</li>
+                <li><strong>CSRF:</strong> Token per azioni critiche</li>
+                <li><strong>Sessioni:</strong> Flag secure, httponly, samesite</li>
+                <li><strong>Password:</strong> Hash con <code>password_hash()</code></li>
+                <li><strong>HTTPS:</strong> Raccomandato in produzione</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>Feature Speciali</h2>
+
+            <h3>Ordini Staff</h3>
+            <p>Flag <code>Staff = true</code> in tabella ORDINI:</p>
+            <ul>
+                <li>Totale automaticamente a €0.00</li>
+                <li>Esclusi da report ricavi</li>
+                <li>Comande comunque stampate per preparazione</li>
+            </ul>
+
+            <h3>Sconti</h3>
+            <p>Campo <code>Sconto</code> in tabella ORDINI:</p>
+            <ul>
+                <li>Importo sottratto dal totale</li>
+                <li>Mostrato su ricevuta cliente</li>
+                <li>Incluso in report ricavi</li>
+            </ul>
+
+            <h3>Coperti</h3>
+            <p>Gestione automatica costo coperto:</p>
+            <ul>
+                <li>Basato su numero coperti e tariffa configurata</li>
+                <li>Automaticamente 0 per ordini asporto</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>Link Utili</h2>
+            <ul>
+                <li><a href="struttura.html">Struttura Repository Dettagliata</a></li>
+                <li><a href="../README.md">README Tecnico Completo</a></li>
+                <li><a href="features.html">Documentazione Feature</a></li>
+                <li><a href="api.html">Documentazione API</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="docs-footer">
+        <small>&copy; <span id="anno"></span> Alessandro Mainardi (AlexMaina05)</small>
+        <span>|</span>
+        <a href="https://github.com/AlexMaina05/RICEVUTE" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+        <span>|</span>
+        <a href="index.html">Indice Documentazione</a>
+    </footer>
+
+    <script>
+        document.getElementById('anno').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

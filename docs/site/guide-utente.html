@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Utente — Documentazione RICEVUTE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+    <header class="docs-header">
+        <h1>👤 Guide Utente</h1>
+        <p>Tutorial e istruzioni per utilizzare il sistema RICEVUTE</p>
+        <a href="../../index.html" class="home-link">⬅ Torna alla Home</a>
+    </header>
+
+    <nav class="docs-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link">🏠 Home</a>
+            <a href="guide-utente.html" class="nav-link active">👤 Guide Utente</a>
+            <a href="installazione.html" class="nav-link">⚙️ Installazione</a>
+            <a href="api.html" class="nav-link">🔌 API</a>
+            <a href="tecnica.html" class="nav-link">🛠️ Tecnica</a>
+        </div>
+    </nav>
+
+    <main class="docs-container">
+        <section class="docs-section">
+            <h2>Come Creare un Ordine</h2>
+            <p>
+                Questa guida spiega come creare ordini nel sistema RICEVUTE per tutti gli scenari: 
+                ordini normali, ordini staff e ordini con sconto.
+            </p>
+
+            <h3>Riferimento Rapido</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo Ordine</th>
+                        <th>Checkbox Staff</th>
+                        <th>Campo Sconto</th>
+                        <th>Totale</th>
+                        <th>Nei Report</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Ordine Normale</strong></td>
+                        <td>❌ Non selezionato</td>
+                        <td>Opzionale (€0.00+)</td>
+                        <td>Calcolato dai prodotti</td>
+                        <td>✅ Sì</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ordine Staff</strong></td>
+                        <td>✅ <strong>SELEZIONATO</strong></td>
+                        <td>Disabilitato</td>
+                        <td><strong>€0.00</strong> (automatico)</td>
+                        <td>❌ No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ordine con Sconto</strong></td>
+                        <td>❌ Non selezionato</td>
+                        <td>✅ Inserire importo</td>
+                        <td>Subtotale - Sconto</td>
+                        <td>✅ Sì</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="docs-section">
+            <h2>Panoramica</h2>
+            <p>Il sistema RICEVUTE permette di creare tre tipi di ordini:</p>
+            <ul>
+                <li><strong>Ordini Normali:</strong> Ordini standard dei clienti inclusi nei report giornalieri e nei calcoli dei ricavi</li>
+                <li><strong>Ordini Staff:</strong> Ordini per i membri dello staff con costo zero, esclusi dai report dei ricavi</li>
+                <li><strong>Ordini con Sconti:</strong> Ordini dei clienti con sconti applicati (possono essere combinati con ordini normali)</li>
+            </ul>
+            <p>Tutti gli ordini vengono creati tramite la pagina <strong>Cassa</strong>.</p>
+
+            <h3>Albero Decisionale: Quale Tipo di Ordine Mi Serve?</h3>
+            <pre>
+Inizia a Creare un Ordine
+         |
+         v
+È per lo staff?  ──SÌ──> Usa ORDINE STAFF
+         |                (Spunta "Ordine Staff")
+         NO
+         |
+         v
+Il cliente ha    ──SÌ──> Usa ORDINE CON SCONTO
+uno sconto?              (Inserisci importo sconto)
+         |
+         NO
+         |
+         v
+    Usa ORDINE NORMALE
+    (Procedura standard)</pre>
+        </section>
+
+        <section class="docs-section">
+            <h2>Accedere alla Pagina di Creazione Ordini</h2>
+            <ol>
+                <li><strong>Effettua il login</strong> al sistema RICEVUTE</li>
+                <li>Dalla homepage, clicca su <strong>"Cassa"</strong> o naviga a <code>/public/cassa.php</code></li>
+                <li>Vedrai l'interfaccia di creazione ordini</li>
+            </ol>
+            <img src="../screenshots/cassa.png" alt="Interfaccia Cassa">
+        </section>
+
+        <section class="docs-section">
+            <h2>Creare un Ordine Normale</h2>
+            <p>Un ordine normale è un ordine standard di un cliente che contribuisce ai ricavi giornalieri e ai report.</p>
+
+            <h3>Istruzioni Passo-Passo</h3>
+
+            <h4>Passo 1: Inserire le Informazioni del Cliente</h4>
+            <ol>
+                <li><strong>Nome Cliente:</strong> Inserire il nome del cliente
+                    <ul>
+                        <li>Esempio: "Mario Rossi"</li>
+                        <li>Default: "Cliente" se lasciato vuoto</li>
+                    </ul>
+                </li>
+                <li><strong>Tavolo / Asporto:</strong> Selezionare un tavolo o asporto
+                    <ul>
+                        <li>Scegliere un numero di tavolo dal menu a tendina (es. "Tavolo 1", "Tavolo 2")</li>
+                        <li>Oppure selezionare "Asporto / Ritiro" per ordini da asporto</li>
+                        <li><strong>Nota:</strong> Quando si seleziona "ASPORTO", il numero di coperti viene impostato automaticamente a 0</li>
+                    </ul>
+                </li>
+                <li><strong>Numero Coperti:</strong> Inserire il numero di persone
+                    <ul>
+                        <li>Minimo: 0</li>
+                        <li>Massimo: 999</li>
+                        <li>Default: 1</li>
+                        <li>Per ordini asporto, questo viene impostato automaticamente a 0</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>Passo 2: Aggiungere Prodotti</h4>
+            <ol>
+                <li><strong>Codice Prodotto:</strong> Inserire il codice del prodotto
+                    <ul>
+                        <li>Esempio: "PIZZA001", "BEV001"</li>
+                        <li>Premere Invio o cliccare "Aggiungi Prodotto"</li>
+                    </ul>
+                </li>
+                <li><strong>Quantità:</strong> Specificare quanti articoli
+                    <ul>
+                        <li>Default: 1</li>
+                        <li>Puoi modificarlo prima di aggiungere il prodotto</li>
+                    </ul>
+                </li>
+                <li>Cliccare il pulsante <strong>"Aggiungi Prodotto"</strong> per aggiungere l'articolo all'ordine</li>
+                <li><strong>Ripetere</strong> per tutti i prodotti che il cliente desidera ordinare</li>
+            </ol>
+
+            <h4>Passo 3: Rivedere l'Ordine</h4>
+            <p>Il pannello di destra mostra un riepilogo del tuo ordine:</p>
+            <ul>
+                <li><strong>Riepilogo Comanda:</strong> Elenco di tutti i prodotti aggiunti</li>
+                <li><strong>Subtotale:</strong> Totale prima di coperti e sconti</li>
+                <li><strong>Coperti:</strong> Costo coperto (se applicabile)</li>
+                <li><strong>Sconto:</strong> Campo sconto (mantenere a 0.00 per ordini normali)</li>
+                <li><strong>TOTALE:</strong> Importo totale finale</li>
+            </ul>
+            <p>Puoi <strong>rimuovere</strong> qualsiasi prodotto cliccando l'icona ❌ accanto ad esso.</p>
+
+            <h4>Passo 4: Salvare e Stampare</h4>
+            <ol>
+                <li>Verificare che tutte le informazioni siano corrette</li>
+                <li>Cliccare il pulsante <strong>"Salva e Stampa Comande"</strong></li>
+                <li>Il sistema:
+                    <ul>
+                        <li>Salverà l'ordine nel database</li>
+                        <li>Genererà ricevute stampate per ogni reparto (Cucina, Bar, ecc.)</li>
+                        <li>Genererà una ricevuta cliente</li>
+                        <li>Mostrerà un messaggio di successo</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Esempio: Ordine Normale</h3>
+            <pre>
+Cliente: Mario Rossi
+Tavolo: Tavolo 5
+Coperti: 4
+
+Prodotti:
+- 2x Pizza Margherita @ €8.50 = €17.00
+- 4x Acqua Naturale @ €3.00 = €12.00
+
+Subtotale: €29.00
+Coperti: €8.00 (4 coperti @ €2.00 ciascuno)
+Sconto: €0.00
+TOTALE: €37.00</pre>
+        </section>
+
+        <section class="docs-section">
+            <h2>Creare un Ordine Staff</h2>
+            <p>Gli ordini staff sono per i dipendenti del ristorante e hanno caratteristiche speciali:</p>
+            <ul>
+                <li>Il totale viene <strong>impostato automaticamente a €0.00</strong></li>
+                <li>Sono <strong>esclusi dai report giornalieri sui ricavi</strong></li>
+                <li>Sono <strong>esclusi dalle statistiche dei prodotti</strong></li>
+            </ul>
+
+            <h3>Istruzioni Passo-Passo</h3>
+
+            <h4>Passo 1: Inserire le Informazioni del Membro dello Staff</h4>
+            <ol>
+                <li><strong>Nome Cliente:</strong> Inserire il nome del membro dello staff
+                    <ul><li>Esempio: "Giuseppe - Staff"</li></ul>
+                </li>
+                <li><strong>Tavolo / Asporto:</strong> Selezionare un tavolo o asporto
+                    <ul><li>Lo staff può mangiare a un tavolo o prendere il pasto da asporto</li></ul>
+                </li>
+                <li><strong>Numero Coperti:</strong> Inserire il numero di membri dello staff
+                    <ul><li>Può essere 1 o più</li></ul>
+                </li>
+            </ol>
+
+            <h4>Passo 2: Abilitare il Flag Staff</h4>
+            <p><strong>IMPORTANTE:</strong> Prima di aggiungere prodotti, spuntare la casella <strong>"Ordine Staff"</strong></p>
+            <ul>
+                <li>✅ <strong>Spuntare</strong> la casella etichettata: "Ordine Staff (totale a 0, escluso dai report)"</li>
+                <li>Questo indica al sistema che si tratta di un ordine staff</li>
+            </ul>
+
+            <p><strong>Cosa succede quando spunti questa casella:</strong></p>
+            <ul>
+                <li>Il campo sconto viene disabilitato (gli ordini staff non possono avere sconti aggiuntivi)</li>
+                <li>Il totale verrà visualizzato come <strong>€0.00</strong> in verde/grassetto</li>
+                <li>L'ordine verrà contrassegnato come ordine staff nel database</li>
+            </ul>
+
+            <h4>Passo 3: Aggiungere Prodotti</h4>
+            <ol>
+                <li>Aggiungere prodotti nello stesso modo di un ordine normale</li>
+                <li>Inserire codici prodotto e quantità</li>
+                <li>Notare che il <strong>TOTALE</strong> rimane a <strong>€0.00</strong> anche mentre aggiungi prodotti</li>
+            </ol>
+
+            <h4>Passo 4: Salvare e Stampare</h4>
+            <ol>
+                <li>Cliccare <strong>"Salva e Stampa Comande"</strong></li>
+                <li>Il sistema:
+                    <ul>
+                        <li>Salverà l'ordine con <code>Staff = true</code></li>
+                        <li>Imposterà il totale a €0.00 nel database</li>
+                        <li>Genererà ricevute cucina/bar (così i pasti dello staff vengono comunque preparati)</li>
+                        <li>Contrassegnerà questo ordine come escluso dai report sui ricavi</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Esempio: Ordine Staff</h3>
+            <pre>
+Cliente: Giuseppe - Staff
+Tavolo: Tavolo 12
+Coperti: 1
+✅ Ordine Staff: SPUNTATO
+
+Prodotti:
+- 1x Pizza Margherita @ €8.50
+- 1x Coca Cola @ €3.00
+
+Subtotale: Mostra elenco prodotti
+Sconto: DISABILITATO (grigio)
+TOTALE: €0.00 (in verde/grassetto)</pre>
+
+            <h3>Note Importanti sugli Ordini Staff</h3>
+            <ul>
+                <li>⚠️ <strong>La casella deve essere spuntata PRIMA di salvare</strong></li>
+                <li>⚠️ Gli ordini staff <strong>non compaiono</strong> nei report giornalieri sui ricavi</li>
+                <li>⚠️ Gli ordini staff <strong>non contano</strong> per le statistiche di vendita dei prodotti</li>
+                <li>✅ Gli ordini staff <strong>vengono comunque stampati</strong> per cucina/bar per la preparazione</li>
+                <li>✅ Gli ordini staff <strong>vengono memorizzati</strong> nel database per scopi di audit</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>Creare un Ordine con Sconto</h2>
+            <p>Puoi applicare uno sconto a qualsiasi ordine normale del cliente. Gli sconti riducono il totale finale e vengono mostrati sulle ricevute.</p>
+
+            <h3>Istruzioni Passo-Passo</h3>
+
+            <h4>Passo 1: Creare l'Ordine Normalmente</h4>
+            <ol>
+                <li>Inserire le informazioni del cliente</li>
+                <li>Selezionare tavolo o asporto</li>
+                <li>Inserire il numero di coperti</li>
+                <li>Aggiungere tutti i prodotti all'ordine</li>
+            </ol>
+
+            <h4>Passo 2: Applicare lo Sconto</h4>
+            <ol>
+                <li>Nel pannello di riepilogo ordine, trovare il campo <strong>"Sconto"</strong></li>
+                <li>Inserire l'importo dello sconto in euro
+                    <ul>
+                        <li>Esempio: <code>5.00</code> per uno sconto di €5</li>
+                        <li>Esempio: <code>10.50</code> per uno sconto di €10.50</li>
+                    </ul>
+                </li>
+                <li><strong>Il totale si aggiorna automaticamente:</strong>
+                    <pre>TOTALE = Subtotale + Coperti - Sconto</pre>
+                </li>
+            </ol>
+
+            <h4>Passo 3: Salvare e Stampare</h4>
+            <ol>
+                <li>Cliccare <strong>"Salva e Stampa Comande"</strong></li>
+                <li>La ricevuta mostrerà:
+                    <ul>
+                        <li>Subtotale (prezzo prima dello sconto)</li>
+                        <li>Sconto (importo dello sconto)</li>
+                        <li>Totale Finale (dopo lo sconto)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Esempio: Ordine con Sconto</h3>
+            <pre>
+Cliente: Laura Bianchi
+Tavolo: Tavolo 3
+Coperti: 2
+
+Prodotti:
+- 2x Pizza Capricciosa @ €10.00 = €20.00
+- 2x Birra Media @ €5.00 = €10.00
+
+Subtotale: €30.00
+Coperti: €4.00 (2 coperti @ €2.00 ciascuno)
+Sconto: €5.00
+TOTALE: €29.00</pre>
+
+            <h3>Regole per gli Sconti</h3>
+            <ul>
+                <li>✅ Lo sconto può essere qualsiasi importo positivo</li>
+                <li>✅ Lo sconto viene sottratto dal totale (subtotale + coperti)</li>
+                <li>✅ Gli ordini con sconto <strong>sono inclusi</strong> nei report sui ricavi</li>
+                <li>⚠️ Lo sconto <strong>non può essere negativo</strong></li>
+                <li>⚠️ Gli ordini staff <strong>non possono</strong> avere sconti (il campo è disabilitato)</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>Comprendere la Ricevuta</h2>
+            <p>Dopo aver salvato un ordine, il sistema genera diverse ricevute:</p>
+
+            <h3>Ricevuta Cliente</h3>
+            <p>Mostra:</p>
+            <ul>
+                <li>Nome del ristorante e dettagli</li>
+                <li>Nome cliente e numero tavolo</li>
+                <li>Numero di coperti</li>
+                <li>Elenco di tutti i prodotti con quantità e prezzi</li>
+                <li>Subtotale</li>
+                <li>Costo coperti (se applicabile)</li>
+                <li>Sconto (se applicabile)</li>
+                <li>Totale finale</li>
+            </ul>
+            <img src="../screenshots/stampa_ricevuta_cliente.png" alt="Ricevuta Cliente">
+
+            <h3>Comande di Reparto</h3>
+            <p>Per ogni reparto (Cucina, Bar, Pizzeria, ecc.):</p>
+            <ul>
+                <li>Mostra solo i prodotti di quel reparto</li>
+                <li>Include tavolo e numero di coperti</li>
+                <li>Usato dal personale di cucina/bar per preparare gli ordini</li>
+            </ul>
+            <img src="../screenshots/stampa_comanda_bar.png" alt="Comanda Bar">
+            <img src="../screenshots/stampa_comanda_pizzeria.png" alt="Comanda Pizzeria">
+        </section>
+
+        <section class="docs-section">
+            <h2>Consigli e Best Practice</h2>
+
+            <h3>Generali</h3>
+            <ul>
+                <li>Verifica sempre le informazioni prima di cliccare "Salva e Stampa Comande"</li>
+                <li>Usa codici prodotto consistenti per velocizzare l'inserimento</li>
+                <li>Per ordini grandi, controlla il riepilogo prodotti prima di salvare</li>
+            </ul>
+
+            <h3>Per Ordini Staff</h3>
+            <ul>
+                <li>Spunta sempre la casella "Ordine Staff" <strong>prima</strong> di aggiungere prodotti</li>
+                <li>Usa una convenzione di denominazione per i nomi staff (es. "Nome - Staff")</li>
+                <li>Gli ordini staff vengono comunque stampati in cucina/bar</li>
+            </ul>
+
+            <h3>Per Sconti</h3>
+            <ul>
+                <li>Inserisci gli sconti come importi positivi (es. 5.00, non -5.00)</li>
+                <li>Controlla che il totale finale sia ragionevole dopo aver applicato lo sconto</li>
+                <li>Gli sconti vengono mostrati sulle ricevute dei clienti</li>
+            </ul>
+
+            <h3>Risoluzione Problemi</h3>
+            <ul>
+                <li><strong>Il prodotto non viene trovato:</strong> Controlla il codice prodotto e riprova</li>
+                <li><strong>Il totale non è corretto:</strong> Verifica il numero di coperti e lo sconto</li>
+                <li><strong>Le comande non vengono stampate:</strong> Controlla la configurazione delle stampanti</li>
+                <li><strong>Ordine staff non si salva come €0.00:</strong> Assicurati che la casella "Ordine Staff" sia spuntata</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="docs-footer">
+        <small>&copy; <span id="anno"></span> Alessandro Mainardi (AlexMaina05)</small>
+        <span>|</span>
+        <a href="https://github.com/AlexMaina05/RICEVUTE" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+        <span>|</span>
+        <a href="index.html">Indice Documentazione</a>
+    </footer>
+
+    <script>
+        document.getElementById('anno').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

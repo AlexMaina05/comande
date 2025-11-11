@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentazione — RICEVUTE</title>
+    <meta name="description" content="Documentazione completa del sistema gestionale RICEVUTE per ristoranti">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+    <header class="docs-header">
+        <h1>📚 Documentazione RICEVUTE</h1>
+        <p>Guida completa al sistema gestionale per ristoranti</p>
+        <a href="../../index.html" class="home-link">⬅ Torna alla Home</a>
+    </header>
+
+    <nav class="docs-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link active">🏠 Home</a>
+            <a href="guide-utente.html" class="nav-link">👤 Guide Utente</a>
+            <a href="installazione.html" class="nav-link">⚙️ Installazione</a>
+            <a href="api.html" class="nav-link">🔌 API</a>
+            <a href="tecnica.html" class="nav-link">🛠️ Tecnica</a>
+        </div>
+    </nav>
+
+    <main class="docs-container">
+        <section class="docs-section">
+            <h2>Benvenuto nella Documentazione</h2>
+            <p>
+                Questa è la documentazione completa del sistema RICEVUTE, un gestionale per ristoranti 
+                che permette di creare ordini, stampare comande, generare report e gestire il menu.
+            </p>
+            <p>
+                Scegli una sezione dal menu di navigazione sopra o esplora le categorie qui sotto.
+            </p>
+        </section>
+
+        <div class="docs-grid">
+            <!-- Guide Utente -->
+            <a href="guide-utente.html" class="doc-card">
+                <div class="doc-card-icon">👤</div>
+                <h3>Guide Utente</h3>
+                <p>Tutorial e guide passo-passo per utilizzare il sistema. Perfetto per chi inizia!</p>
+                <span class="card-badge">Consigliato</span>
+            </a>
+
+            <!-- Installazione -->
+            <a href="installazione.html" class="doc-card">
+                <div class="doc-card-icon">⚙️</div>
+                <h3>Guida Installazione</h3>
+                <p>Istruzioni complete per installare e configurare il sistema sul tuo server.</p>
+            </a>
+
+            <!-- API -->
+            <a href="api.html" class="doc-card">
+                <div class="doc-card-icon">🔌</div>
+                <h3>Documentazione API</h3>
+                <p>Endpoint REST, formati di richiesta/risposta e esempi di integrazione.</p>
+            </a>
+
+            <!-- Documentazione Tecnica -->
+            <a href="tecnica.html" class="doc-card">
+                <div class="doc-card-icon">🛠️</div>
+                <h3>Documentazione Tecnica</h3>
+                <p>Architettura del sistema, struttura del database e dettagli implementativi.</p>
+            </a>
+
+            <!-- Feature Specifiche -->
+            <a href="features.html" class="doc-card">
+                <div class="doc-card-icon">✨</div>
+                <h3>Funzionalità</h3>
+                <p>Descrizione dettagliata delle funzionalità: staff flag, sconti, coperti e altro.</p>
+            </a>
+
+            <!-- Testing -->
+            <a href="testing.html" class="doc-card">
+                <div class="doc-card-icon">🧪</div>
+                <h3>Testing e QA</h3>
+                <p>Guide per il testing della stampa, sicurezza e verifica delle funzionalità.</p>
+            </a>
+
+            <!-- Struttura Repository -->
+            <a href="struttura.html" class="doc-card">
+                <div class="doc-card-icon">📁</div>
+                <h3>Struttura Repository</h3>
+                <p>Organizzazione dei file, convenzioni e standard del progetto.</p>
+            </a>
+
+            <!-- Pagine Web -->
+            <a href="pagine.html" class="doc-card">
+                <div class="doc-card-icon">🖼️</div>
+                <h3>Pagine Web</h3>
+                <p>Screenshot e spiegazioni di tutte le interfacce dell'applicazione.</p>
+            </a>
+
+            <!-- Summaries -->
+            <a href="summaries.html" class="doc-card">
+                <div class="doc-card-icon">📝</div>
+                <h3>Summaries</h3>
+                <p>Riepiloghi delle implementazioni e modifiche effettuate nel tempo.</p>
+            </a>
+        </div>
+
+        <section class="docs-section">
+            <h2>Quick Start</h2>
+            <p><strong>Nuovo utente?</strong> Inizia da qui:</p>
+            <ol>
+                <li>Leggi la <a href="guide-utente.html">Guida Utente</a> per imparare a usare il sistema</li>
+                <li>Se devi installare il sistema, consulta la <a href="installazione.html">Guida Installazione</a></li>
+                <li>Esplora le <a href="pagine.html">Pagine Web</a> per vedere screenshot delle interfacce</li>
+            </ol>
+
+            <p><strong>Sviluppatore?</strong> Inizia da qui:</p>
+            <ol>
+                <li>Consulta la <a href="struttura.html">Struttura Repository</a> per capire l'organizzazione</li>
+                <li>Studia la <a href="api.html">Documentazione API</a> per gli endpoint disponibili</li>
+                <li>Leggi la <a href="tecnica.html">Documentazione Tecnica</a> per i dettagli architetturali</li>
+            </ol>
+        </section>
+
+        <section class="docs-section">
+            <h2>Caratteristiche Principali</h2>
+            <ul>
+                <li><strong>Gestione Ordini:</strong> Crea ordini con ricerca prodotti in tempo reale</li>
+                <li><strong>Ordini Staff:</strong> Traccia i pasti dello staff separatamente (costo zero, esclusi dai report)</li>
+                <li><strong>Supporto Sconti:</strong> Applica sconti agli ordini dei clienti</li>
+                <li><strong>Stampa per Reparto:</strong> Generazione automatica di ricevute per cucina, bar e altri reparti</li>
+                <li><strong>Report Giornalieri:</strong> Statistiche di vendita e ricavi con export PDF</li>
+                <li><strong>Pannello Admin:</strong> Gestisci prodotti, tavoli, categorie e reparti</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>Stack Tecnologico</h2>
+            <ul>
+                <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
+                <li><strong>Backend:</strong> PHP 8.0+</li>
+                <li><strong>Database:</strong> MySQL/MariaDB</li>
+                <li><strong>Stampa:</strong> Integrazione CUPS per stampa ricevute</li>
+                <li><strong>API:</strong> Endpoint REST JSON</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="docs-footer">
+        <small>&copy; <span id="anno"></span> Alessandro Mainardi (AlexMaina05)</small>
+        <span>|</span>
+        <a href="https://github.com/AlexMaina05/RICEVUTE" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+        <span>|</span>
+        <a href="../../index.html">Torna alla Home</a>
+    </footer>
+
+    <script>
+        document.getElementById('anno').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

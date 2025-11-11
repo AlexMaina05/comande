@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struttura Repository Gestionale</title>
+    <style>
+        /* CSS Integrato e Migliorato */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap'); /* Font più moderno */
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 30px;
+            background-color: #f0f2f5; /* Sfondo leggermente più scuro */
+            color: #343a40; /* Testo principale scuro */
+        }
+
+        h1 {
+            color: #005a9c; /* Blu primario */
+            border-bottom: 3px solid #e9ecef; /* Bordo più leggero */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .tree {
+            list-style: none;
+            padding-left: 0;
+            background-color: #ffffff; /* Sfondo bianco per il box dell'albero */
+            padding: 25px;
+            border-radius: 12px; /* Angoli arrotondati */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Ombra leggera */
+        }
+
+        .tree ul {
+            list-style: none;
+            padding-left: 30px; /* Maggiore indentazione */
+            margin-left: 10px; /* Leggero spostamento */
+            border-left: 2px solid #dee2e6; /* Linea verticale più spessa */
+            padding-top: 10px; /* Spazio sopra il primo elemento del sotto-livello */
+        }
+
+        .tree li {
+            position: relative;
+            padding-left: 30px; /* Spazio aumentato per icona e linea */
+            margin-bottom: 12px; /* Maggiore spazio tra elementi */
+        }
+
+        /* Linea orizzontale */
+        .tree li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px; /* Allineamento migliorato */
+            width: 20px; /* Linea più lunga */
+            height: 2px; /* Linea più spessa */
+            background-color: #dee2e6; /* Colore solido */
+            border: none; /* Rimuove tratteggio */
+        }
+
+        /* Icone base per file e cartelle */
+        .icon {
+            display: inline-block;
+            width: 20px; /* Larghezza fissa per allineamento */
+            text-align: center;
+            margin-right: 10px; /* Spazio tra icona e nome */
+            font-size: 1.1em;
+            vertical-align: middle; /* Allinea icona al testo */
+        }
+
+        /* Icone specifiche usando pseudo-elementi */
+        .folder > .file-name::before { content: '📁'; color: #007bff; display: inline-block; width: 20px; text-align: center; margin-right: 10px; vertical-align: middle;}
+        .file > .file-name::before { content: '📄'; color: #6c757d; display: inline-block; width: 20px; text-align: center; margin-right: 10px; vertical-align: middle;}
+
+        /* Icone colorate per tipo di file */
+        .file[data-type="html"] > .file-name::before { content: '🌐'; color: #e34f26; }
+        .file[data-type="css"] > .file-name::before { content: '🎨'; color: #1572b6; }
+        .file[data-type="js"] > .file-name::before { content: '⚡'; color: #f7df1e; background-color: black; border-radius: 2px; } /* Sfondo nero per JS giallo */
+        .file[data-type="php"] > .file-name::before { content: '🐘'; color: #777bb4; }
+        .file[data-type="gitignore"] > .file-name::before { content: '🚫'; color: #f1502f; }
+        .file[data-type="sql"] > .file-name::before { content: '💾'; color: #00758f; }
+        .file[data-type="md"] > .file-name::before { content: '📝'; color: #083fa1; }
+        .file[data-type="timer"] > .file-name::before { content: '⏱️'; color: #6c757d; }
+        .file[data-type="service"] > .file-name::before { content: '⚙️'; color: #6c757d; }
+        .file[data-type="cname"] > .file-name::before { content: '🌐'; color: #6c757d; }
+        .file[data-type="license"] > .file-name::before { content: '📜'; color: #6c757d; }
+
+        .file-name {
+            font-weight: 500;
+            color: #495057; /* Colore più scuro per il nome */
+            vertical-align: middle; /* Allinea testo all'icona */
+        }
+
+        .folder > .file-name {
+             font-weight: 700; /* Nomi cartelle più evidenti */
+             color: #212529; /* Nero leggero per cartelle */
+        }
+
+        .description {
+            color: #adb5bd; /* Descrizione più chiara */
+            font-size: 0.85em;
+            margin-left: 5px; /* Spazio ridotto */
+            font-style: italic;
+        }
+
+        /* Effetto hover per evidenziare */
+        .tree li span:hover {
+            color: #0056b3; /* Blu scuro su hover */
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <h1>Struttura Repository Gestionale ✨</h1>
+
+    <ul class="tree">
+        <li class="folder">
+            <span class="file-name">tuo_progetto</span>
+            <ul>
+                <li class="file" data-type="gitignore"><span class="file-name">.gitignore</span> <span class="description">(Ignora file per Git)</span></li>
+                <li class="file" data-type="html"><span class="file-name">index.html</span> <span class="description">(Homepage moderna)</span></li>
+                <li class="file" data-type="css"><span class="file-name">style_home.css</span> <span class="description">(CSS per index.html)</span></li>
+                <li class="file" data-type="css"><span class="file-name">style.css</span> <span class="description">(CSS pagine interne)</span></li>
+                <li class="file" data-type="php"><span class="file-name">cassa.php</span> <span class="description">(Modulo cassa)</span></li>
+                <li class="file" data-type="php"><span class="file-name">report.php</span> <span class="description">(Modulo report)</span></li>
+                <li class="file" data-type="php"><span class="file-name">admin.php</span> <span class="description">(Modulo admin)</span></li>
+                <li class="file" data-type="php"><span class="file-name">login.php</span> <span class="description">(Pagina accesso)</span></li>
+                <li class="file" data-type="php"><span class="file-name">check_login.php</span> <span class="description">(Logica login)</span></li>
+                <li class="file" data-type="php"><span class="file-name">logout.php</span> <span class="description">(Logica logout)</span></li>
+                <li class="file" data-type="php"><span class="file-name">db_connection.php</span> <span class="description">(Connessione DB)</span></li>
+                <li class="file" data-type="js"><span class="file-name">cassa.js</span> <span class="description">(JS per cassa)</span></li>
+                <li class="file" data-type="js"><span class="file-name">report.js</span> <span class="description">(JS per report)</span></li>
+                <li class="file" data-type="js"><span class="file-name">admin.js</span> <span class="description">(JS per admin)</span></li>
+                <li class="file" data-type="cname"><span class="file-name">CNAME</span> <span class="description">(Configurazione dominio)</span></li>
+                <li class="file" data-type="license"><span class="file-name">LICENSE</span> <span class="description">(Licenza software)</span></li>
+                <li class="folder">
+                    <span class="file-name">api</span> <span class="description">(Endpoints backend)</span>
+                    <ul>
+                        <li class="file" data-type="php"><span class="file-name">salva_ordine.php</span> <span class="description">(Salva ordine)</span></li>
+                        <li class="file" data-type="php"><span class="file-name">cerca_prodotto.php</span> <span class="description">(Cerca prodotto)</span></li>
+                        <li class="file" data-type="php"><span class="file-name">genera_report.php</span> <span class="description">(Dati report)</span></li>
+                        <li class="file" data-type="php"><span class="file-name">gestisci_dati.php</span> <span class="description">(CRUD admin)</span></li>
+                        <li class="file" data-type="php"><span class="file-name">ripeti_comanda.php</span> <span class="description">(Ristampa comanda)</span></li>
+                    </ul>
+                </li>
+                 <li class="folder">
+                    <span class="file-name">docs</span> <span class="description">(Documentazione)</span>
+                    <ul>
+                        <li class="file" data-type="md"><span class="file-name">README.md</span> <span class="description">(Descrizione)</span></li>
+                        <li class="file" data-type="md"><span class="file-name">INSTALL.md</span> <span class="description">(Installazione)</span></li>
+                         <li class="file" data-type="service"><span class="file-name">worker_comande.service</span> <span class="description">(Systemd service)</span></li>
+                        <li class="file" data-type="timer"><span class="file-name">worker_comande.timer</span> <span class="description">(Systemd timer)</span></li>
+                    </ul>
+                </li>
+                <li class="folder">
+                    <span class="file-name">scripts</span> <span class="description">(Utility server)</span>
+                    <ul>
+                        <li class="file" data-type="php"><span class="file-name">worker_process_comande.php</span> <span class="description">(Worker stampa)</span></li>
+                    </ul>
+                </li>
+                 <li class="folder">
+                    <span class="file-name">sql</span> <span class="description">(Schema DB)</span>
+                    <ul>
+                        <li class="file" data-type="sql"><span class="file-name">schema.sql</span> <span class="description">(Schema base)</span></li>
+                    </ul>
+                </li>
+                <li class="folder">
+                    <span class="file-name">utilities</span> <span class="description">(Script e docs varie)</span>
+                     <ul>
+                        <li class="file" data-type="sql"><span class="file-name">creazione_tabelle.sql</span> <span class="description">(Creazione + seed)</span></li>
+                        <li class="file" data-type="php"><span class="file-name">logica_di_stampa.php</span> <span class="description">(Frammento codice)</span></li>
+                        <li class="file" data-type="md"><span class="file-name">cosa manca.md</span> <span class="description">(TODO list)</span></li>
+                        <li class="file" data-type="html"><span class="file-name">Schema.html</span> <span class="description">(Diagramma HTML)</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagine Web — RICEVUTE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+    <header class="docs-header">
+        <h1>🖼️ Pagine Web</h1>
+        <p>Screenshot e spiegazioni interfacce</p>
+        <a href="../../index.html" class="home-link">⬅ Torna alla Home</a>
+    </header>
+    <nav class="docs-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link">🏠 Home</a>
+            <a href="guide-utente.html" class="nav-link">👤 Guide Utente</a>
+            <a href="installazione.html" class="nav-link">⚙️ Installazione</a>
+            <a href="api.html" class="nav-link">🔌 API</a>
+            <a href="tecnica.html" class="nav-link">🛠️ Tecnica</a>
+        </div>
+    </nav>
+    <main class="docs-container">
+        <section class="docs-section">
+            <h2>Homepage</h2>
+            <img src="../screenshots/homepage.png" alt="Homepage">
+            <p>Pagina iniziale con link a Cassa, Report e Admin</p>
+        </section>
+        <section class="docs-section">
+            <h2>Login</h2>
+            <img src="../screenshots/login.png" alt="Login">
+            <p>Pagina di autenticazione utente</p>
+        </section>
+        <section class="docs-section">
+            <h2>Cassa</h2>
+            <img src="../screenshots/cassa.png" alt="Cassa">
+            <p>Interfaccia creazione ordini con ricerca prodotti e riepilogo</p>
+        </section>
+        <section class="docs-section">
+            <h2>Report</h2>
+            <img src="../screenshots/report.png" alt="Report">
+            <p>Visualizzazione report giornalieri e statistiche vendite</p>
+        </section>
+        <section class="docs-section">
+            <h2>Admin</h2>
+            <img src="../screenshots/admin.png" alt="Admin">
+            <p>Pannello amministrativo per gestione prodotti, tavoli, categorie e reparti</p>
+        </section>
+        <section class="docs-section">
+            <h2>Ricevute Stampate</h2>
+            <h3>Ricevuta Cliente</h3>
+            <img src="../screenshots/stampa_ricevuta_cliente.png" alt="Ricevuta Cliente">
+            <h3>Comanda Bar</h3>
+            <img src="../screenshots/stampa_comanda_bar.png" alt="Comanda Bar">
+            <h3>Comanda Pizzeria</h3>
+            <img src="../screenshots/stampa_comanda_pizzeria.png" alt="Comanda Pizzeria">
+        </section>
+        <section class="docs-section">
+            <h2>Documentazione Completa</h2>
+            <p>Per descrizioni dettagliate di tutte le pagine:</p>
+            <ul>
+                <li><a href="../PAGINE_WEB.md">PAGINE_WEB.md</a></li>
+            </ul>
+        </section>
+    </main>
+    <footer class="docs-footer">
+        <small>&copy; <span id="anno"></span> Alessandro Mainardi (AlexMaina05)</small>
+        <span>|</span>
+        <a href="index.html">Indice Documentazione</a>
+    </footer>
+    <script>document.getElementById('anno').textContent = new Date().getFullYear();</script>
+</body>
+</html>
