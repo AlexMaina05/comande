@@ -47,6 +47,31 @@ body {
     100% { background-position: 0% 50%; }
 }
 
+/* --- Alert per Sviluppo --- */
+.dev-alert {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    padding: 15px 20px;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    border-radius: 12px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.dev-alert p {
+    margin: 0;
+    color: #fbbf24;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.dev-alert em {
+    font-style: italic;
+}
+
 /* --- Header Moderno --- */
 .modern-header {
     width: 100%;
