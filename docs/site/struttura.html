@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struttura — RICEVUTE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+    <header class="docs-header">
+        <h1>📁 Struttura Repository</h1>
+        <p>Organizzazione file e convenzioni</p>
+        <a href="../../index.html" class="home-link">⬅ Torna alla Home</a>
+    </header>
+    <nav class="docs-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link">🏠 Home</a>
+            <a href="guide-utente.html" class="nav-link">👤 Guide Utente</a>
+            <a href="installazione.html" class="nav-link">⚙️ Installazione</a>
+            <a href="api.html" class="nav-link">🔌 API</a>
+            <a href="tecnica.html" class="nav-link">🛠️ Tecnica</a>
+        </div>
+    </nav>
+    <main class="docs-container">
+        <section class="docs-section">
+            <h2>Struttura Directory</h2>
+            <pre><code>RICEVUTE/
+├── api/                  # API endpoints REST JSON
+├── config/               # File configurazione
+├── docs/                 # Documentazione
+│   ├── site/            # Sito documentazione HTML
+│   ├── screenshots/     # Screenshot applicazione
+│   └── summaries/       # Riepiloghi implementazioni
+├── public/              # File web-accessible
+│   ├── assets/css/     # Fogli di stile
+│   ├── assets/js/      # JavaScript
+│   └── *.php           # Pagine applicazione
+├── scripts/             # Script CLI e worker
+├── sql/                 # Schema database
+├── src/                 # Classi PHP
+└── tools/              # Tool sviluppo e test</code></pre>
+        </section>
+        <section class="docs-section">
+            <h2>Documentazione Completa</h2>
+            <p>Per dettagli completi sulla struttura del repository, consulta:</p>
+            <ul>
+                <li><a href="../../STRUCTURE.md">STRUCTURE.md</a> - Documentazione completa struttura</li>
+            </ul>
+        </section>
+    </main>
+    <footer class="docs-footer">
+        <small>&copy; <span id="anno"></span> Alessandro Mainardi (AlexMaina05)</small>
+        <span>|</span>
+        <a href="index.html">Indice Documentazione</a>
+    </footer>
+    <script>document.getElementById('anno').textContent = new Date().getFullYear();</script>
+</body>
+</html>

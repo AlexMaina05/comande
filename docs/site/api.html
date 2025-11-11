@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentazione API — RICEVUTE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+    <header class="docs-header">
+        <h1>🔌 Documentazione API</h1>
+        <p>Endpoint REST e formati di richiesta/risposta</p>
+        <a href="../../index.html" class="home-link">⬅ Torna alla Home</a>
+    </header>
+
+    <nav class="docs-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link">🏠 Home</a>
+            <a href="guide-utente.html" class="nav-link">👤 Guide Utente</a>
+            <a href="installazione.html" class="nav-link">⚙️ Installazione</a>
+            <a href="api.html" class="nav-link active">🔌 API</a>
+            <a href="tecnica.html" class="nav-link">🛠️ Tecnica</a>
+        </div>
+    </nav>
+
+    <main class="docs-container">
+        <section class="docs-section">
+            <h2>Formato Uniforme delle Risposte API</h2>
+            <p>Tutte le API del sistema RICEVUTE utilizzano un formato JSON standardizzato.</p>
+            
+            <h3>Schema della Risposta</h3>
+            <pre><code>{
+  "success": true|false,
+  "data": {...},        // presente solo se success=true
+  "error": {            // presente solo se success=false
+    "code": 1001,
+    "message": "Descrizione errore",
+    "details": [...]    // opzionale
+  }
+}</code></pre>
+
+            <h3>Esempio Risposta di Successo</h3>
+            <pre><code>{
+  "success": true,
+  "data": {
+    "ID_Prodotto": "1",
+    "Descrizione": "Pizza Margherita",
+    "Prezzo": 8.50
+  }
+}</code></pre>
+
+            <h3>Esempio Risposta di Errore</h3>
+            <pre><code>{
+  "success": false,
+  "error": {
+    "code": 1004,
+    "message": "Codice prodotto non fornito",
+    "details": ["Campo 'codice' mancante o vuoto"]
+  }
+}</code></pre>
+        </section>
+
+        <section class="docs-section">
+            <h2>Endpoint Principali</h2>
+
+            <h3>GET /api/cerca_prodotto.php</h3>
+            <p><strong>Descrizione:</strong> Cerca un prodotto per codice</p>
+            <p><strong>Parametri:</strong></p>
+            <ul>
+                <li><code>codice</code> (string, required): Codice del prodotto</li>
+            </ul>
+            <p><strong>Esempio Richiesta:</strong></p>
+            <pre><code>GET /api/cerca_prodotto.php?codice=PIZZA001</code></pre>
+            <p><strong>Esempio Risposta:</strong></p>
+            <pre><code>{
+  "success": true,
+  "data": {
+    "ID_Prodotto": "1",
+    "Descrizione": "Pizza Margherita",
+    "Prezzo": 8.50,
+    "Codice_Prodotto": "PIZZA001"
+  }
+}</code></pre>
+
+            <h3>POST /api/salva_ordine.php</h3>
+            <p><strong>Descrizione:</strong> Salva un nuovo ordine e genera comande</p>
+            <p><strong>Body (JSON):</strong></p>
+            <pre><code>{
+  "nome_cliente": "Mario Rossi",
+  "id_tavolo": 1,
+  "numero_coperti": 2,
+  "totale": 25.00,
+  "staff": false,
+  "sconto": 0.00,
+  "dettagli": [
+    {
+      "id_prodotto": 1,
+      "quantita": 2,
+      "prezzo_unitario": 8.50
+    }
+  ]
+}</code></pre>
+            <p><strong>Esempio Risposta:</strong></p>
+            <pre><code>{
+  "success": true,
+  "data": {
+    "id_ordine": 42,
+    "message": "Ordine salvato con successo"
+  }
+}</code></pre>
+
+            <h3>GET /api/genera_report.php</h3>
+            <p><strong>Descrizione:</strong> Genera report giornaliero</p>
+            <p><strong>Parametri:</strong></p>
+            <ul>
+                <li><code>data</code> (string, required): Data in formato YYYY-MM-DD</li>
+            </ul>
+            <p><strong>Esempio Richiesta:</strong></p>
+            <pre><code>GET /api/genera_report.php?data=2024-11-06</code></pre>
+
+            <h3>GET /api/gestisci_dati.php</h3>
+            <p><strong>Descrizione:</strong> Gestisce dati anagrafici (prodotti, tavoli, categorie, reparti)</p>
+            <p><strong>Parametri:</strong></p>
+            <ul>
+                <li><code>section</code> (string): prodotti | tavoli | categorie | reparti</li>
+                <li><code>data</code> (string): Per report, data in formato YYYY-MM-DD</li>
+            </ul>
+
+            <h3>POST /api/ripeti_comanda.php</h3>
+            <p><strong>Descrizione:</strong> Ripete la stampa di una comanda</p>
+            <p><strong>Body (JSON):</strong></p>
+            <pre><code>{
+  "id_comanda": 123
+}</code></pre>
+        </section>
+
+        <section class="docs-section">
+            <h2>Codici di Errore</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Codice</th>
+                        <th>Descrizione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1001</td><td>Input non valido</td></tr>
+                    <tr><td>1002</td><td>Validazione fallita</td></tr>
+                    <tr><td>1003</td><td>Database error</td></tr>
+                    <tr><td>1004</td><td>Parametro mancante</td></tr>
+                    <tr><td>1005</td><td>Risorsa non trovata</td></tr>
+                    <tr><td>2001</td><td>Errore stampa</td></tr>
+                    <tr><td>5000</td><td>Errore interno del server</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="docs-section">
+            <h2>Validazione Input</h2>
+            <p>Il sistema implementa validazione centralizzata tramite <code>src/Utils/InputValidator.php</code>:</p>
+            <ul>
+                <li>Sanificazione input (trim, strip tags)</li>
+                <li>Validazione tipi (integer, float, boolean, string)</li>
+                <li>Validazione lunghezza minima/massima</li>
+                <li>Validazione valori permessi (enum)</li>
+                <li>Validazione formato email, URL, data</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>Autenticazione</h2>
+            <p>Le pagine protette richiedono autenticazione tramite sessione PHP:</p>
+            <ul>
+                <li><code>public/login.php</code>: Pagina di login</li>
+                <li><code>config/check_login.php</code>: Verifica sessione</li>
+                <li>Cookie di sessione con flag secure, httponly, samesite</li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>Link Utili</h2>
+            <ul>
+                <li><a href="../API.md">Documentazione API Completa (API.md)</a></li>
+                <li><a href="installazione.html">Guida Installazione</a></li>
+                <li><a href="tecnica.html">Documentazione Tecnica</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="docs-footer">
+        <small>&copy; <span id="anno"></span> Alessandro Mainardi (AlexMaina05)</small>
+        <span>|</span>
+        <a href="https://github.com/AlexMaina05/RICEVUTE" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+        <span>|</span>
+        <a href="index.html">Indice Documentazione</a>
+    </footer>
+
+    <script>
+        document.getElementById('anno').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

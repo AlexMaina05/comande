@@ -1,0 +1,20 @@
+[Unit]
+Description=Worker per processare le comande (one-shot invoked by timer)
+After=network.target
+
+[Service]
+Type=simple
+User=www-data                    # cambia con l'utente appropriato (non root)
+Group=www-data
+WorkingDirectory=/path/to/RICEVUTE
+ExecStart=/usr/bin/php /path/to/RICEVUTE/scripts/worker_process_comande.php --limit=10
+Restart=on-failure
+RestartSec=30
+TimeoutStartSec=300
+KillMode=process
+Environment=PATH=/usr/bin:/usr/local/bin
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

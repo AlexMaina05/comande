@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionale Cassa — Home</title>
+    <meta name="description" content="Gestionale per ristorante — creazione ricevute, report vendite e manutenzione menu.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="public/assets/css/style_home.css">
+</head>
+<body>
+    <header class="modern-header">
+        <div class="header-content">
+            <h1>Gestionale Comande Brés&amp;Baràca</h1>
+            <p>Seleziona la sezione che ti serve</p>
+        </div>
+    </header>
+
+    <main class="modern-wrapper" role="main">
+        <section class="modern-grid" aria-label="Menu principale">
+
+            <a href="public/cassa.php" class="modern-card card-cassa">
+                <div class="card-icon" aria-hidden="true">🧾</div>
+                <div class="card-content">
+                    <h3>Creazione Ricevute</h3>
+                    <p>Da qui puoi creare le comande.</p>
+                </div>
+            </a>
+
+            <a href="public/report.php" class="modern-card card-report">
+                <div class="card-icon" aria-hidden="true">📈</div>
+                <div class="card-content">
+                    <h3>Controllo Dati</h3>
+                    <p>Visualizza report di venduto e statistiche.</p>
+                </div>
+            </a>
+
+            <a href="public/admin.php" class="modern-card card-admin">
+                <div class="card-icon" aria-hidden="true">⚙️</div>
+                <div class="card-content">
+                    <h3>Manutenzione</h3>
+                    <p>Modifica prodotti, reparti e impostazioni. (ACCESSO ADMIN)</p>
+                </div>
+            </a>
+
+            <a href="docs/site/index.html" class="modern-card card-docs">
+                <div class="card-icon" aria-hidden="true">📚</div>
+                <div class="card-content">
+                    <h3>Documentazione</h3>
+                    <p>Guide, API, installazione e documentazione tecnica completa.</p>
+                </div>
+            </a>
+            
+        </section>
+    </main>
+
+    <footer class="modern-footer" role="contentinfo">
+        <small>&copy; <span id="anno"></span> Mainardi Alessandro</small>
+        <span>|</span>
+        <a href="https://github.com/AlexMaina05" target="_blank" rel="noopener noreferrer">GitHub: AlexMaina05</a>
+    </footer>
+
+    <script>
+        document.getElementById('anno').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing — RICEVUTE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/docs.css">
+</head>
+<body>
+    <header class="docs-header">
+        <h1>🧪 Testing e QA</h1>
+        <p>Guide per test e verifica qualità</p>
+        <a href="../../index.html" class="home-link">⬅ Torna alla Home</a>
+    </header>
+    <nav class="docs-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link">🏠 Home</a>
+            <a href="guide-utente.html" class="nav-link">👤 Guide Utente</a>
+            <a href="installazione.html" class="nav-link">⚙️ Installazione</a>
+            <a href="api.html" class="nav-link">🔌 API</a>
+            <a href="tecnica.html" class="nav-link">🛠️ Tecnica</a>
+        </div>
+    </nav>
+    <main class="docs-container">
+        <div class="docs-grid">
+            <a href="../PRINT_TESTING_GUIDE.md" class="doc-card">
+                <div class="doc-card-icon">🖨️</div>
+                <h3>Test Stampa</h3>
+                <p>Guida completa al testing della stampa comande</p>
+            </a>
+            <a href="../XSS_TESTING.md" class="doc-card">
+                <div class="doc-card-icon">🔒</div>
+                <h3>Test Sicurezza XSS</h3>
+                <p>Verifica protezioni contro XSS</p>
+            </a>
+            <a href="../STAFF_FLAG_TEST_GUIDE.md" class="doc-card">
+                <div class="doc-card-icon">✅</div>
+                <h3>Test Flag Staff</h3>
+                <p>Test funzionalità ordini staff</p>
+            </a>
+        </div>
+        <section class="docs-section">
+            <h2>Guide di Testing</h2>
+            <ul>
+                <li><a href="../PRINT_TESTING_GUIDE.md">PRINT_TESTING_GUIDE.md</a> - Test stampa e worker</li>
+                <li><a href="../XSS_TESTING.md">XSS_TESTING.md</a> - Test sicurezza XSS</li>
+                <li><a href="../STAFF_FLAG_TEST_GUIDE.md">STAFF_FLAG_TEST_GUIDE.md</a> - Test ordini staff</li>
+            </ul>
+        </section>
+    </main>
+    <footer class="docs-footer">
+        <small>&copy; <span id="anno"></span> Alessandro Mainardi (AlexMaina05)</small>
+        <span>|</span>
+        <a href="index.html">Indice Documentazione</a>
+    </footer>
+    <script>document.getElementById('anno').textContent = new Date().getFullYear();</script>
+</body>
+</html>
